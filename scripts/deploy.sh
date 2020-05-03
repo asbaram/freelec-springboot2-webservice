@@ -3,31 +3,31 @@
 REPOSITORY=/home/ec2-user/app/step2
 PROJECT_NAME=freelec-springboot2-webservice
 
-echo "> Build ÆÄÀÏ º¹»ç"
+echo "> Build íŒŒì¼ ë³µì‚¬"
 cp $REPOSITORY/zip/*.jar $REPOSITORY/
 
 CURRENT_PID=$(pgrep -fl freelec-springboot2-webservice | grep jar | awk '{print $1}')
 
-echo "ÇöÀç ±¸µ¿ ÁßÀÎ ¾ÖÇÃ¸®ÄÉÀÌ¼Ç pid: $CURRENT_PID"
+echo "í˜„ìž¬ êµ¬ë™ ì¤‘ì¸ ì• í”Œë¦¬ì¼€ì´ì…˜ pid: $CURRENT_PID"
 
 if [ -z "$CURRENT_PID" ]; then
-        echo "> ÇöÀç ±¸µ¿ ÁßÀÎ ¾ÖÇÃ¸®ÄÉÀÌ¼ÇÀÌ ¾øÀ¸¹Ç·Î Á¾·áÇÏÁö ¾Ê½À´Ï´Ù."
+        echo "> í˜„ìž¬ êµ¬ë™ ì¤‘ì¸ ì• í”Œë¦¬ì¼€ì´ì…˜ì´ ì—†ìœ¼ë¯€ë¡œ ì¢…ë£Œí•˜ì§€ ì•ŠìŠµë‹ˆë‹¤."
 else
         echo"> kill -15 $CURRENT_PID"
         kill -15 $CURRENT_PID
         sleep 5
 fi
 
-echo "> »õ ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ¹èÆ÷"
+echo "> ìƒˆ ì• í”Œë¦¬ì¼€ì´ì…˜ ë°°í¬"
 
 JAR_NAME=$(ls -tr $REPOSITORY/*.jar | tail -n 1)
 
 echo "> JAR Name: $JAR_NAME"
 
-echo "> $JAR_NAME ¿¡ ½ÇÇà±ÇÇÑ Ãß°¡"
+echo "> $JAR_NAME ì— ì‹¤í–‰ê¶Œí•œ ì¶”ê°€"
 
 chmod +x $JAR_NAME
 
-echo "> $JAR_NAME ½ÇÇà"
+echo "> $JAR_NAME ì‹¤í–‰"
 
 nohup java -jar -Dspring.config.location=classpath:/application.properties,classpath:/application-real.properties,/home/ec2-user/app/application-oauth.properties,/home/ec2-user/app/application-real-db.properties -Dspring.profiles.active=real $JAR_NAME > $REPOSITORY/nohup.out 2>&1 &
